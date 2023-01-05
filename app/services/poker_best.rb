@@ -6,7 +6,6 @@ module PokerBest
       result[i][:best] = (result[i][:best] == score_array.max)
     }
     result
-    #Rails.logger.info result[0][:best]
   end
 
   module_function :best_hand

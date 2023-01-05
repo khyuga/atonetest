@@ -16,7 +16,6 @@ module PokerHand
       send(hand, cards)
     end
     result = result_array.compact
-    #binding.pry
   end
 
   def suit_array(cards)

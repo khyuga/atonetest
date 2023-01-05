@@ -84,5 +84,17 @@ module PokerHand
     HAND_LIST[:high_card]
   end
 
-  module_function :judgement_result, :suit_array, :number_array, :number_duplicate_counts, :straight_flush, :flush, :straight, :four_card, :full_house, :three_card, :two_pair, :one_pair, :high_card
+  module_function :judgement_result,
+                  :suit_array,
+                  :number_array,
+                  :number_duplicate_counts,
+                  :straight_flush,
+                  :flush,
+                  :straight,
+                  :four_card,
+                  :full_house,
+                  :three_card,
+                  :two_pair,
+                  :one_pair,
+                  :high_card
 end

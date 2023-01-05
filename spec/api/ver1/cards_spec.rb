@@ -4,7 +4,7 @@ include Ver1
 
 RSpec.describe 'API', type: :request do
   describe '正常系' do
-    
+
     before do
       post '/api/v1/poker', params
     end

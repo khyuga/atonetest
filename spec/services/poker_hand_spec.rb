@@ -1,8 +1,7 @@
 require 'rails_helper'
 
-include PokerHand
-
 RSpec.describe PokerHand do
+  include PokerHand
   describe '役判定' do
     let(:hand){ PokerHand.judgement_result(cards)[0] }
     subject{hand}

@@ -1,9 +1,8 @@
 require 'rails_helper'
 
-include PokerHand
-include PokerError
-
 RSpec.describe HomeController, type: :controller do
+  include PokerHand
+  include PokerError
   describe "top" do
     it 'トップページの応答が正常' do
       get :top

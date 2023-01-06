@@ -2,7 +2,7 @@ module PokerError
 
   def hand_validation(cards)
     if cards.blank?
-      error_messages = ["手札のカード枚数が足りません。正しく手札を入力してください"]
+      error_messages = ["カードを入力してください。"]
     else
       cards_array = cards.split
       lack_of_cards(cards_array) || incorrect_words(cards_array) || duplicate(cards_array)
@@ -30,7 +30,8 @@ module PokerError
 
   def duplicate(cards_array) #枚数5枚で不正文字もないが重複を含むケース
     if cards_array.uniq.size != 5
-      error_message = ["カードが重複しています。"]
+      duplicate_cards = cards_array.select{|v| cards_array.count(v) > 1}.uniq
+      error_message = ["カードが重複しています。（#{duplicate_cards.join(', ')}）"]
     end
   end
 

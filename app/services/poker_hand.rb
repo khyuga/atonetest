@@ -1,4 +1,5 @@
 module PokerHand
+
   HAND_LIST = {
     straight_flush: { name: "ストレートフラッシュ", score: 8 },
     four_card: { name: "フォーカード", score: 7 },
@@ -97,4 +98,5 @@ module PokerHand
                   :two_pair,
                   :one_pair,
                   :high_card
+
 end

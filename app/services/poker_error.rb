@@ -1,11 +1,15 @@
 module PokerError
 
   def hand_validation(cards)
+    cards_array = cards.split
     if cards.blank?
       error_messages = ["カードを入力してください。"]
+    elsif lack_of_cards(cards_array)
+      lack_of_cards(cards_array)
+    elsif incorrect_words(cards_array).present? && duplicate(cards_array).present?
+      incorrect_words(cards_array) << duplicate(cards_array)
     else
-      cards_array = cards.split
-      lack_of_cards(cards_array) || incorrect_words(cards_array) || duplicate(cards_array)
+      incorrect_words(cards_array) || duplicate(cards_array)
     end
   end
 
@@ -18,9 +22,10 @@ module PokerError
   def incorrect_words(cards_array) #枚数5枚だが不正文字を含むケース
     error_message = []
     correct_pairs = /^([CDHS])(1[0-3]|[1-9])$/
-    cards_array.map.with_index{ |card, i|
+    cards_array.each.with_index{ |card, i|
       if !card.match(correct_pairs)
         error_message << "#{i+1}番目のカード指定文字が不正です。（#{card}）"
+        #binding.pry
       end
     }
     if error_message != []

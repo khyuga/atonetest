@@ -60,9 +60,9 @@ RSpec.describe PokerAPI do
       it 'カードとエラー内容' do
         expect(error).to eq [
                               {:cards=>"H9 C9 S9 H22 C22", :msg=>"4番目のカード指定文字が不正です。（H22）,5番目のカード指定文字が不正です。（C22）"},
-                              {:cards=>"H1 H13 H12 H11 H11", :msg=>"カードが重複しています。"},
+                              {:cards=>"H1 H13 H12 H11 H11", :msg=>"カードが重複しています。（H11）"},
                               {:cards=>"C13 D12 C11 H8", :msg=>"5つのカード指定文字を半角スペース区切りで入力してください。（例：\"S1 H3 D9 C13 S11\"）"},
-                              {:cards=>"", :msg=>"手札のカード枚数が足りません。正しく手札を入力してください"}
+                              {:cards=>"", :msg=>"カードを入力してください。"}
                             ]
       end
     end
@@ -84,7 +84,7 @@ RSpec.describe PokerAPI do
       end
       it 'エラーを含む組み合わせのカードとエラー内容' do
         expect(error).to eq [
-                              {:cards=>"H1 H13 H12 H11 H11", :msg=>"カードが重複しています。"},
+                              {:cards=>"H1 H13 H12 H11 H11", :msg=>"カードが重複しています。（H11）"},
                               {:cards=>"C13 D12 C11 H8 H7 H10", :msg=>"5つのカード指定文字を半角スペース区切りで入力してください。（例：\"S1 H3 D9 C13 S11\"）"}
                             ]
       end

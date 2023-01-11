@@ -37,30 +37,40 @@ RSpec.describe PokerAPI do
   end
 
   describe '純正常系' do
-    context '不正カードを含む組み合わせが送信されるケース' do
+    context '不正カードを1つ含む組み合わせが送信されるケース' do
+      let(:cards_array){
+        [
+          "H9 C9 S9 H2 C22"
+        ]
+      }
+      it 'カードとエラー内容' do
+        expect(error).to eq [{:cards=>"H9 C9 S9 H2 C22", :msg=>"5番目のカード指定文字が不正です。（C22）"}]
+      end
+    end
+    context '不正カードを複数含む組み合わせが送信されるケース' do
       let(:cards_array){
         [
           "H9 C9 S9 H22 C22"
         ]
       }
       it 'カードとエラー内容' do
-        expect(error).to eq [{:cards=>"H9 C9 S9 H22 C22", :msg=>"4番目のカード指定文字が不正です。（H22）,5番目のカード指定文字が不正です。（C22）"}]
+        expect(error).to eq [{:cards=>"H9 C9 S9 H22 C22", :msg=>["4番目のカード指定文字が不正です。（H22）", "5番目のカード指定文字が不正です。（C22）"]}]
       end
     end
 
     context '不正カード、重複、枚数違反を含む組み合わせ、及び未入力が送信されるケース' do
       let(:cards_array){
         [
-          "H9 C9 S9 H22 C22",
-          "H1 H13 H12 H11 H11",
+          "H9 C9 S9 H22 C2",
+          "H1 H13 W12 H11 H11",
           "C13 D12 C11 H8",
           ""
         ]
       }
       it 'カードとエラー内容' do
         expect(error).to eq [
-                              {:cards=>"H9 C9 S9 H22 C22", :msg=>"4番目のカード指定文字が不正です。（H22）,5番目のカード指定文字が不正です。（C22）"},
-                              {:cards=>"H1 H13 H12 H11 H11", :msg=>"カードが重複しています。（H11）"},
+                              {:cards=>"H9 C9 S9 H22 C2", :msg=>"4番目のカード指定文字が不正です。（H22）"},
+                              {:cards=>"H1 H13 W12 H11 H11", :msg=>["3番目のカード指定文字が不正です。（W12）", "カードが重複しています。（H11）"]},
                               {:cards=>"C13 D12 C11 H8", :msg=>"5つのカード指定文字を半角スペース区切りで入力してください。（例：\"S1 H3 D9 C13 S11\"）"},
                               {:cards=>"", :msg=>"カードを入力してください。"}
                             ]

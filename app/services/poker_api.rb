@@ -1,4 +1,5 @@
 module PokerAPI
+
   include PokerHand
   include PokerError
   include PokerBest
@@ -11,7 +12,7 @@ module PokerAPI
       if PokerError.hand_validation(cards)
         {
           cards: cards,
-          msg: PokerError.hand_validation(cards).join(',')
+          msg: PokerError.hand_validation(cards).join("\n")
         }
       end
     end

@@ -15,12 +15,6 @@ module PokerError
     end
   end
 
-  #def lack_of_cards(cards_array) #フォームは空白でないが枚数が5枚でないケース
-  # if cards_array.size != 5
-  #   error_message = ["5つのカード指定文字を半角スペース区切りで入力してください。（例：\"S1 H3 D9 C13 S11\"）"]
-  # end
-  #end
-
   def incorrect_words(cards_array) #枚数5枚だが不正文字を含むケース
     error_message = []
     correct_pairs = /^([CDHS])(1[0-3]|[1-9])$/

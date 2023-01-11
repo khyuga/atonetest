@@ -9,4 +9,5 @@ module PokerBest
   end
 
   module_function :best_hand
+
 end

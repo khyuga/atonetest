@@ -15,4 +15,10 @@
 /log/*
 !/log/.keep
 /tmp
-.idea/..
+/.idea/.gitignore
+/.idea/inspectionProfiles/Project_Default.xml
+/.idea/misc.xml
+/.idea/modules.xml
+/.idea/testproject.iml
+/.idea/vcs.xml
+/.idea/workspace.xml

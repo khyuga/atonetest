@@ -5,7 +5,7 @@ RSpec.describe 'API', type: :request do
 
   describe 'POST API' do
     before do
-      post '/api/v1/poker', params
+      post '/api/v1/poker', params, headers: { "Content-Type" => "application/json" }
     end
 
     shared_examples 'ステータスコード400とエラーメッセージが返される' do
@@ -35,7 +35,7 @@ RSpec.describe 'API', type: :request do
 
   describe 'GET API' do
     before do
-      get '/api/v1/poker'
+      get '/api/v1/poker', headers: { "Content-Type" => "application/json" }
     end
 
     it 'ステータスコード400' do
@@ -45,4 +45,59 @@ RSpec.describe 'API', type: :request do
       expect(JSON.parse(response.body)['error'][0]['msg']).to eq '正しい入力形式で送信してください。'
     end
   end
+
+  describe 'File format is not JSON' do
+    context 'Text' do
+      before do
+        post '/api/v1/poker', headers: { "Content-Type" => "text/plain" }
+      end
+
+      it 'ステータスコード400' do
+        expect(response.status).to eq 400
+      end
+      it 'エラーメッセージ' do
+        expect(JSON.parse(response.body)['error'][0]['msg']).to eq '正しい入力形式で送信してください。'
+      end
+    end
+
+    context 'JavaScript' do
+      before do
+        post '/api/v1/poker', headers: { "Content-Type" => "application/javascript" }
+      end
+
+      it 'ステータスコード400' do
+        expect(response.status).to eq 400
+      end
+      it 'エラーメッセージ' do
+        expect(JSON.parse(response.body)['error'][0]['msg']).to eq '正しい入力形式で送信してください。'
+      end
+    end
+
+    context 'HTML' do
+      before do
+        post '/api/v1/poker', headers: { "Content-Type" => "text/html" }
+      end
+
+      it 'ステータスコード400' do
+        expect(response.status).to eq 400
+      end
+      it 'エラーメッセージ' do
+        expect(JSON.parse(response.body)['error'][0]['msg']).to eq '正しい入力形式で送信してください。'
+      end
+    end
+
+    context 'XML' do
+      before do
+        post '/api/v1/poker', headers: { "Content-Type" => "application/xml" }
+      end
+
+      it 'ステータスコード400' do
+        expect(response.status).to eq 400
+      end
+      it 'エラーメッセージ' do
+        expect(JSON.parse(response.body)['error'][0]['msg']).to eq '正しい入力形式で送信してください。'
+      end
+    end
+  end
+
 end

@@ -1,20 +1,19 @@
- module Ver1
-    class Cards < Grape::API
-      content_type :json, 'application/json'
-      format :json
+module Ver1
+  class Cards < Grape::API
+    content_type :json, 'application/json'
+    format :json
 
-      include PokerAPI
+    include PokerAPI
 
-      params do
-        requires :cards, type: Array
-      end
-
-      resource :poker do
-        post do
-          cards_array = params[:cards]
-          PokerAPI.api_output(cards_array)
-        end
-      end
-
+    params do
+      requires :cards, type: Array
     end
- end
+
+    resource :poker do
+      post do
+        cards_array = params[:cards]
+        PokerAPI.api_output(cards_array)
+      end
+    end
+  end
+end

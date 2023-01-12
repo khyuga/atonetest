@@ -12,7 +12,7 @@ module Ver1
     content_type :html, 'text/html'
 
     rescue_from Grape::Exceptions::Base do |e|
-      error!({ errors: [{ msg: "正しい入力形式で送信してください。" }] }, 400)
+      error!({ error: [{ msg: "正しい入力形式で送信してください。" }] }, 400)
     end
 
     mount Ver1::Cards

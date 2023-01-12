@@ -1,4 +1,6 @@
+# 指定通りに入力されなかったカードがどのエラーに該当するかを判定
 module PokerError
+  # エラー内容を判定する
   def hand_validation(cards)
     if cards.blank?
       error_messages = ['カードを入力してください。']
@@ -14,7 +16,7 @@ module PokerError
     end
   end
 
-  # 枚数5枚だが不正文字を含むケース
+  # 不正文字を含むケース
   def incorrect_words(cards_array)
     error_message = []
     correct_pairs = /^([CDHS])(1[0-3]|[1-9])$/
@@ -24,7 +26,7 @@ module PokerError
     error_message if error_message != []
   end
 
-  # 枚数5枚で不正文字もないが重複を含むケース
+  # 重複を含むケース
   def duplicate(cards_array)
     if cards_array.uniq.size != 5
       duplicate_cards = cards_array.select { |v| cards_array.count(v) > 1 }.uniq

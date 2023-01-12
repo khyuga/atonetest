@@ -1,3 +1,4 @@
+# APIの出力面を作成
 module PokerAPI
   include PokerHand
   include PokerError

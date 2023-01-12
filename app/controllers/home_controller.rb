@@ -6,7 +6,7 @@ class HomeController < ApplicationController
 
   def top; end
 
-  # viewに送信するメソッド
+  # WebAppで入力されたカードとその判定結果をviewにリダイレクトする
   def check
     cards = params[:cards]
     flash[:cards] = "\"#{cards}\""

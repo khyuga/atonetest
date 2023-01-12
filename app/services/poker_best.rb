@@ -1,3 +1,4 @@
+# 最も強い役に該当するカード組を判定
 module PokerBest
   def best_hand(result)
     score_array = result.map { |score| score[:best] }

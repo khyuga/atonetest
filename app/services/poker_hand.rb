@@ -1,3 +1,4 @@
+# 指定通りに入力されたカードがどの役に該当するかを判定
 module PokerHand
   HAND_LIST = {
     straight_flush: { name: 'ストレートフラッシュ', score: 8 },

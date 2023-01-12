@@ -7,14 +7,15 @@ RSpec.describe 'API', type: :request do
     let(:url) { '/api/v1/poker' }
     let(:params) do
       {
-        "cards": [
+        cards: [
           'C13 S12 C11 C10 C7'
         ]
       }
     end
+
     it '正常なカードの組み合わせが1つ送信されるケース' do
       post url, params
-      expect(response).to have_http_status 201
+      expect(response).to have_http_status :created
     end
   end
 end

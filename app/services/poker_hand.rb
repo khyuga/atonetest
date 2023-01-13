@@ -17,7 +17,7 @@ module PokerHand
     result_array = HAND_LIST.keys.map do |hand|
       send(hand, cards)
     end
-    result = result_array.compact
+    result_array.compact
   end
 
   def suit_array(cards)

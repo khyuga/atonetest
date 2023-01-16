@@ -11,8 +11,8 @@ module Ver1
 
     resource :poker do
       post do
-        cards_array = params[:cards]
-        PokerAPI.api_output(cards_array)
+        hands = params[:cards]
+        PokerAPI.api_output(hands)
       end
     end
   end

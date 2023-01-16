@@ -4,9 +4,9 @@ module PokerAPI
   include PokerError
   include PokerBest
 
-  def api_output(cards_array)
-    irregular_cards = cards_array.select { |cards| PokerError.hand_validation(cards)&.any? }
-    regular_cards = cards_array - irregular_cards
+  def api_output(hands)
+    irregular_cards = hands.select { |cards| PokerError.hand_validation(cards)&.any? }
+    regular_cards = hands - irregular_cards
 
     error = irregular_cards.map do |cards|
       if PokerError.hand_validation(cards)[1]

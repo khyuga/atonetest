@@ -11,7 +11,8 @@ module Ver1
     content_type :txt, 'text/plain'
     content_type :html, 'text/html'
 
-    rescue_from Grape::Exceptions::Base do |_e|
+    rescue_from Grape::Exceptions::Base do |e|
+      Rails.logger.error e
       error!({ error: [{ msg: '正しい入力形式で送信してください。' }] }, 400)
     end
 

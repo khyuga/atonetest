@@ -31,13 +31,13 @@ module PokerAPI
     end
     result = PokerBest.best_hand(result)
 
-    output = if result.blank?
-               { error: error }
-             elsif error.blank?
-               { result: result }
-             else
-               { result: result, error: error }
-             end
+    if result.blank?
+      { error: error }
+    elsif error.blank?
+      { result: result }
+    else
+      { result: result, error: error }
+    end
   end
 
   module_function :api_output

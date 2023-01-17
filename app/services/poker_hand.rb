@@ -68,17 +68,5 @@ module PokerHand
     number_duplicate_counts(cards) == [1, 1, 1, 1, 1] && ( [straight?(cards)] || [flush?(cards)] == false )
   end
 
-  module_function :judgement_result,
-                  :suit_array,
-                  :number_array,
-                  :number_duplicate_counts,
-                  :straight_flush?,
-                  :flush?,
-                  :straight?,
-                  :four_card?,
-                  :full_house?,
-                  :three_card?,
-                  :two_pair?,
-                  :one_pair?,
-                  :high_card?
+  module_function :judgement_result
 end

@@ -14,12 +14,8 @@ module PokerHand
 
   # 役判定メソッド
   def judgement_result(cards)
-    #HAND_LIST.keys.detect do |hand|
-    # HAND_LIST[hand] if send(hand  '?', cards)
-    #end
     hand_list_keys = HAND_LIST.keys.detect{ |x| send(x, cards) }
     HAND_LIST[hand_list_keys]
-    #binding.pry
   end
 
   def suit_array(cards)

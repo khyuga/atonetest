@@ -5,7 +5,7 @@ RSpec.describe PokerHand do
   describe '役判定' do
     subject { hand }
 
-    let(:hand) { PokerHand.judgement_result(cards)[0] }
+    let(:hand) { PokerHand.judgement_result(cards) }
 
     shared_examples 'ストレートフラッシュ' do
       it { is_expected.to eq({ name: 'ストレートフラッシュ', score: 8 }) }

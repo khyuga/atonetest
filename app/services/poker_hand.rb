@@ -18,17 +18,16 @@ module PokerHand
     HAND_LIST[hand_list_keys]
   end
 
-  def suit_array(cards)
+  def suit(cards)
     cards.scan(/[CDHS]/)
   end
 
-  def number_array(cards)
+  def number(cards)
     cards.scan(/1[0-3]|[1-9]/).map(&:to_i)
   end
 
   def number_duplicate_counts(cards)
-    num_array = number_array(cards)
-    num_array.uniq.map { |e| num_array.count(e) }.sort
+    number(cards).uniq.map { |e| number(cards).count(e) }.sort
   end
 
   def straight_flush?(cards)
@@ -36,12 +35,11 @@ module PokerHand
   end
 
   def straight?(cards)
-    num_array = number_array(cards)
-    (num_array.max - num_array.min == 4 && num_array.uniq.size == 5) || num_array.sort == [1, 10, 11, 12, 13]
+    (number(cards).max - number(cards).min == 4 && number(cards).uniq.size == 5) || number(cards).sort == [1, 10, 11, 12, 13]
   end
 
   def flush?(cards)
-    suit_array(cards).uniq.size == 1
+    suit(cards).uniq.size == 1
   end
 
   def four_card?(cards)

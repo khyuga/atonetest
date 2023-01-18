@@ -10,7 +10,8 @@ class HomeController < ApplicationController
   def check
     cards = params[:cards]
     flash[:cards] = "\"#{cards}\""
-    flash[:messages] = PokerError.hand_validation(cards)&.join("\n") || PokerHand.judgement_result(cards)[:name]
+    flash[:errors] = PokerError.hand_validation(cards)&.join("\n")
+    flash[:result] = PokerHand.judgement_result(cards)[:name] if flash[:errors].blank?
     redirect_to('/')
   end
 end

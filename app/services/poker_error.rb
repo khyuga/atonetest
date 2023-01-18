@@ -3,13 +3,16 @@ module PokerError
   # エラー内容を判定する
   def hand_validation(cards)
     if cards.blank?
-      error_messages = ['カードを入力してください。']
+      error_message = ['カードを入力してください。']
     else
       hands = cards.split
       if hands.size != 5
         error_message = ['5つのカード指定文字を半角スペース区切りで入力してください。（例："S1 H3 D9 C13 S11"）']
       elsif incorrect_words(hands).present? && duplicate(hands).present?
-        incorrect_words(hands) + duplicate(hands)
+        error_message = []
+        error_message << incorrect_words(hands)
+        error_message << duplicate(hands)
+        error_message.flatten
       else
         incorrect_words(hands) || duplicate(hands)
       end
@@ -20,7 +23,7 @@ module PokerError
   def incorrect_words(hands)
     error_message = []
     correct_pairs = /^([CDHS])(1[0-3]|[1-9])$/
-    hands.each.with_index do |card, i|
+    hands.map.with_index do |card, i|
       error_message << "#{i + 1}番目のカード指定文字が不正です。（#{card}）" unless card.match(correct_pairs)
     end
     error_message if error_message != []

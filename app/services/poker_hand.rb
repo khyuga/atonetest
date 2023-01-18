@@ -13,7 +13,7 @@ module PokerHand
   }.freeze
 
   # 役判定メソッド
-  def judgement_result(hand)
+  def category(hand)
     hand_list_keys = HAND_LIST.keys.detect{ |x| send(x, hand) }
     HAND_LIST[hand_list_keys]
   end
@@ -66,7 +66,7 @@ module PokerHand
     number_duplicate_counts(hand) == [1, 1, 1, 1, 1] && ( [straight?(hand)] || [flush?(hand)] == false )
   end
 
-  module_function :judgement_result,
+  module_function :category,
                   :suit,
                   :number,
                   :number_duplicate_counts,

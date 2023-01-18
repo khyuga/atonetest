@@ -5,7 +5,18 @@
   <input name="cards" class="form" type="text">
   <p><input class="btn" type="submit" value="check"></p>
 <% end %>
-<% if flash[:messages] %>
-  <p>カード　：<%= simple_format(flash[:cards]) %></p>
-  <p>判定結果：<%= simple_format(flash[:messages]) %></p>
+<% if flash[:errors] %>
+  <p class="error-cards">
+    カード：<%= simple_format(flash[:cards]) %>
+  </p>
+  <p class="errors">
+    エラー：<%= simple_format(flash[:errors]) %>
+  </p>
+<% else %>
+  <p class="result-cards">
+    カード　：<%= simple_format(flash[:cards]) %>
+  </p>
+  <p class="result">
+    判定結果：<%= simple_format(flash[:result]) %>
+  </p>
 <% end %>

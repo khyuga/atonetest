@@ -1,8 +1,5 @@
 # APIの出力面を作成
 module PokerAPI
-  include PokerHand
-  include PokerError
-  include PokerBest
 
   def api_output(hands)
     irregular_cards = hands.select { |cards| PokerError.hand_validation(cards)&.any? }
@@ -31,13 +28,7 @@ module PokerAPI
     end
     result = PokerBest.best_hand(result)
 
-    if result.blank?
-      { error: error }
-    elsif error.blank?
-      { result: result }
-    else
-      { result: result, error: error }
-    end
+    { result: result, error: error }.transform_values(&:presence).compact
   end
 
   module_function :api_output

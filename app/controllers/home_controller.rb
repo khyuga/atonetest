@@ -8,8 +8,8 @@ class HomeController < ApplicationController
 
   # WebAppで入力されたカードとその判定結果をviewにリダイレクトする
   def check
-    cards = params[:cards]
-    flash[:cards] = "\"#{cards}\""
+    hand = params[:cards]
+    flash[:hand] = "\"#{hand}\""
     flash[:errors] = PokerError.hand_validation(cards)&.join("\n")
     flash[:result] = PokerHand.judgement_result(cards)[:name] if flash[:errors].blank?
     redirect_to('/')

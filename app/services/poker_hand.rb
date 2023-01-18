@@ -13,57 +13,57 @@ module PokerHand
   }.freeze
 
   # 役判定メソッド
-  def judgement_result(cards)
-    hand_list_keys = HAND_LIST.keys.detect{ |x| send(x, cards) }
+  def judgement_result(hand)
+    hand_list_keys = HAND_LIST.keys.detect{ |x| send(x, hand) }
     HAND_LIST[hand_list_keys]
   end
 
-  def suit(cards)
-    cards.scan(/[CDHS]/)
+  def suit(hand)
+    hand.scan(/[CDHS]/)
   end
 
-  def number(cards)
-    cards.scan(/1[0-3]|[1-9]/).map(&:to_i)
+  def number(hand)
+    hand.scan(/1[0-3]|[1-9]/).map(&:to_i)
   end
 
-  def number_duplicate_counts(cards)
-    number(cards).uniq.map { |e| number(cards).count(e) }.sort
+  def number_duplicate_counts(hand)
+    number(hand).uniq.map { |e| number(hand).count(e) }.sort
   end
 
-  def straight_flush?(cards)
-    straight?(cards) && flush?(cards)
+  def straight_flush?(hand)
+    straight?(hand) && flush?(hand)
   end
 
-  def straight?(cards)
-    (number(cards).max - number(cards).min == 4 && number(cards).uniq.size == 5) || number(cards).sort == [1, 10, 11, 12, 13]
+  def straight?(hand)
+    (number(hand).max - number(hand).min == 4 && number(hand).uniq.size == 5) || number(hand).sort == [1, 10, 11, 12, 13]
   end
 
-  def flush?(cards)
-    suit(cards).uniq.size == 1
+  def flush?(hand)
+    suit(hand).uniq.size == 1
   end
 
-  def four_card?(cards)
-    number_duplicate_counts(cards) == [1, 4]
+  def four_card?(hand)
+    number_duplicate_counts(hand) == [1, 4]
   end
 
-  def full_house?(cards)
-    number_duplicate_counts(cards) == [2, 3]
+  def full_house?(hand)
+    number_duplicate_counts(hand) == [2, 3]
   end
 
-  def three_card?(cards)
-    number_duplicate_counts(cards) == [1, 1, 3]
+  def three_card?(hand)
+    number_duplicate_counts(hand) == [1, 1, 3]
   end
 
-  def two_pair?(cards)
-    number_duplicate_counts(cards) == [1, 2, 2]
+  def two_pair?(hand)
+    number_duplicate_counts(hand) == [1, 2, 2]
   end
 
-  def one_pair?(cards)
-    number_duplicate_counts(cards) == [1, 1, 1, 2]
+  def one_pair?(hand)
+    number_duplicate_counts(hand) == [1, 1, 1, 2]
   end
 
-  def high_card?(cards)
-    number_duplicate_counts(cards) == [1, 1, 1, 1, 1] && ( [straight?(cards)] || [flush?(cards)] == false )
+  def high_card?(hand)
+    number_duplicate_counts(hand) == [1, 1, 1, 1, 1] && ( [straight?(hand)] || [flush?(hand)] == false )
   end
 
   module_function :judgement_result,

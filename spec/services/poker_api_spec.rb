@@ -3,12 +3,12 @@ require 'rails_helper'
 include PokerAPI
 
 RSpec.describe PokerAPI do
-  let(:error) { PokerAPI.api_output(cards_array)[:error] }
-  let(:result) { PokerAPI.api_output(cards_array)[:result] }
+  let(:error) { PokerAPI.api_output(hands)[:error] }
+  let(:result) { PokerAPI.api_output(hands)[:result] }
 
   describe '正常系' do
     context '正常なカードの組み合わせが1つ送信されるケース' do
-      let(:cards_array) do
+      let(:hands) do
         [
           'C13 S12 C11 C10 C7'
         ]
@@ -20,7 +20,7 @@ RSpec.describe PokerAPI do
     end
 
     context '正常なカードの組み合わせが2つ以上送信されるケース' do
-      let(:cards_array) do
+      let(:hands) do
         [
           'C13 S12 C11 C10 C7',
           'H9 C9 S9 H2 C2',
@@ -40,7 +40,7 @@ RSpec.describe PokerAPI do
 
   describe '純正常系' do
     context '不正カードを1つ含む組み合わせが送信されるケース' do
-      let(:cards_array) do
+      let(:hands) do
         [
           'H9 C9 S9 H2 C22'
         ]
@@ -52,7 +52,7 @@ RSpec.describe PokerAPI do
     end
 
     context '不正カードを複数含む組み合わせが送信されるケース' do
-      let(:cards_array) do
+      let(:hands) do
         [
           'H9 C9 S9 H22 C22'
         ]
@@ -65,7 +65,7 @@ RSpec.describe PokerAPI do
     end
 
     context '不正カード、重複、枚数違反を含む組み合わせ、及び未入力が送信されるケース' do
-      let(:cards_array) do
+      let(:hands) do
         [
           'H9 C9 S9 H22 C2',
           'H1 H13 W12 H11 H11',
@@ -87,7 +87,7 @@ RSpec.describe PokerAPI do
     end
 
     context '正常な組み合わせとエラーを含む組み合わせが同時に送信されるケース' do
-      let(:cards_array) do
+      let(:hands) do
         [
           'H1 H13 H12 H11 H11',
           'H9 S9 D11 H11 H10',

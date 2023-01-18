@@ -2,10 +2,10 @@
 module PokerAPI
 
   def api_output(hands)
-    irregular_cards = hands.select { |hand| PokerError.hand_validation(hand)&.any? }
-    regular_cards = hands - irregular_cards
+    invalid_hands = hands.select { |hand| PokerError.hand_validation(hand)&.any? }
+    valid_hands = hands - invalid_hands
 
-    error = irregular_cards.map do |hand|
+    error = invalid_hands.map do |hand|
       if PokerError.hand_validation(hand)[1]
         {
           cards: hand,
@@ -19,7 +19,7 @@ module PokerAPI
       end
     end
 
-    result = regular_cards.map do |hand|
+    result = valid_hands.map do |hand|
       {
         cards: hand,
         hand: PokerHand.judgement_result(hand)[:name],

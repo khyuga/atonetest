@@ -6,17 +6,17 @@
   <p><input class="btn" type="submit" value="check"></p>
 <% end %>
 <% if flash[:errors] %>
-  <p class="error-cards">
-    カード：<%= simple_format(flash[:cards]) %>
+  <p class="invalid-hand">
+    カード：<%= simple_format(flash[:cards], { class: 'cards' }) %>
   </p>
   <p class="errors">
-    エラー：<%= simple_format(flash[:errors]) %>
+    エラー：<%= simple_format(flash[:errors], { class: 'response' }) %>
   </p>
 <% else %>
-  <p class="result-cards">
-    カード　：<%= simple_format(flash[:cards]) %>
+  <p class="valid_hand">
+    カード　：<%= simple_format(flash[:cards], { class: 'cards' }) %>
   </p>
-  <p class="result">
-    判定結果：<%= simple_format(flash[:result]) %>
+  <p class="hand">
+    判定結果：<%= simple_format(flash[:result], { class: 'response' }) %>
   </p>
 <% end %>

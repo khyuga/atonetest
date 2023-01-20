@@ -22,8 +22,8 @@ module PokerAPI
     result = valid_hands.map do |hand|
       {
         cards: hand,
-        hand: PokerHand.category(hand)[:name],
-        best: PokerHand.category(hand)[:score]
+        hand: PokerHand.category_name(hand),
+        best: PokerHand.category_score(hand)
       }
     end
     result = PokerBest.best_hand(result)

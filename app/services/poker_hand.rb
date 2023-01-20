@@ -18,6 +18,14 @@ module PokerHand
     HAND_LIST[hand_list_keys]
   end
 
+  def category_name(hand)
+    category(hand)[:name]
+  end
+
+  def category_score(hand)
+    category(hand)[:score]
+  end
+
   def suit(hand)
     hand.scan(/[CDHS]/)
   end
@@ -67,6 +75,8 @@ module PokerHand
   end
 
   module_function :category,
+                  :category_name,
+                  :category_score,
                   :suit,
                   :number,
                   :number_duplicate_counts,

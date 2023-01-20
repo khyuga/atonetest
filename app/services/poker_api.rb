@@ -23,7 +23,7 @@ module PokerAPI
       {
         cards: hand,
         hand: PokerHand.category_name(hand),
-        best: PokerHand.category_score(hand)
+        score: PokerHand.category_score(hand)
       }
     end
     result = PokerBest.best_hand(result)

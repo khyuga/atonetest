@@ -1,9 +1,6 @@
 class HomeController < ApplicationController
   protect_from_forgery
 
-  include PokerHand
-  include PokerError
-
   def top; end
 
   # WebAppで入力されたカードとその判定結果をviewにリダイレクトする

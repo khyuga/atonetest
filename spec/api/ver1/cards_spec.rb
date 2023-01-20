@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-include Ver1
+include API::Ver1
 
 RSpec.describe 'API', type: :request do
   before do

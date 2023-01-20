@@ -9,7 +9,7 @@ RSpec.describe PokerBest do
     context '正常なカードの組み合わせが1つ送信されるケース' do
       let(:result) do
         [
-          { cards: 'C13 S12 C11 C10 C7', hand: 'ハイカード', best: 0 }
+          { cards: 'C13 S12 C11 C10 C7', hand: 'ハイカード', score: 0 }
         ]
       end
 
@@ -21,9 +21,9 @@ RSpec.describe PokerBest do
     context '正常なカードの組み合わせが2つ以上送信されるケース' do
       let(:result) do
         [
-          { cards: 'H9 S9 D11 H11 H10', hand: 'ツーペア', best: 2 },
-          { cards: 'H9 S3 D10 H2 S2', hand: 'ワンペア', best: 1 },
-          { cards: 'C13 S12 C11 C10 C7', hand: 'ハイカード', best: 0 }
+          { cards: 'H9 S9 D11 H11 H10', hand: 'ツーペア', score: 2 },
+          { cards: 'H9 S3 D10 H2 S2', hand: 'ワンペア', score: 1 },
+          { cards: 'C13 S12 C11 C10 C7', hand: 'ハイカード', score: 0 }
         ]
       end
 
@@ -43,8 +43,8 @@ RSpec.describe PokerBest do
     context 'bestに同率一位が存在するケース' do
       let(:result) do
         [
-          { cards: 'H9 S9 D11 H11 H10', hand: 'ツーペア', best: 2 },
-          { cards: 'H9 S3 D3 H2 S2', hand: 'ツーペア', best: 2 }
+          { cards: 'H9 S9 D11 H11 H10', hand: 'ツーペア', score: 2 },
+          { cards: 'H9 S3 D3 H2 S2', hand: 'ツーペア', score: 2 }
         ]
       end
 

@@ -1,28 +1,99 @@
-== README
+# atoneの試練 khyuga
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+2022年11月下旬〜23年1月中旬にかけて、ポーカーの役を判定するアプリケーションを制作しました。
 
-Things you may want to cover:
+1つのカード組の役を判定するWebApp版、複数のカード組の役を判定できるAPI版、及びテストコードが成果物です。
 
-* Ruby version
+## 環境
 
-* System dependencies
+* ruby 2.4.7p357 (2019-08-28 revision 67796) [-darwin21]
 
-* Configuration
+* Rails 4.2.11.3
 
-* Database creation
+* RSpec 3.12
 
-* Database initialization
+## 使い方
 
-* How to run the test suite
+### WebApp
 
-* Services (job queues, cache servers, search engines, etc.)
+#### 1. Terminalで以下のコマンドを入力した後、ブラウザで[localhost:3000](http://localhost:3000/)にアクセスします。
 
-* Deployment instructions
+`$ bundle exec rails s`
 
-* ...
+#### 2. 入力フォームに、以下のように5枚のカードを入力します。
 
+`D1 D10 S9 C5 C4`
 
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+* 半角英字大文字のスート（S,H,D,C）と数字（1〜13）を組み合わせ、カードごとに半角スペースを開けてください。
+
+* J,Q,Kはそれぞれ11,12,13として扱います。また、ジョーカーはありません。
+
+#### 3. 「check」ボタンをクリックすると、判定結果が表示されます。
+
+* 入力内容にエラーがない場合、該当する役の名前が表示されます。
+
+* 入力内容にエラーがある場合、エラー内容に応じてメッセージが表示されます。
+
+### API
+
+#### 1. Terminalで以下のコマンドを入力した後、Postmanを起動します。
+
+`$ bundle exec rails s`
+
+#### 2. Bodyに、キーが"cards"、バリューが5枚のカード組を1要素とする配列で構成された、JSON形式のハッシュ配列を入力します。
+
+* 以下のような形式です。
+
+```
+{
+   "cards": [
+       "H1 H13 H12 H11 H10",
+       "H9 C9 S9 H2 C2",
+       "C13 D12 C11 H8 H7"
+   ]
+}
+```
+
+* 入力可能なカードは、Webアプリケーションと同様です。
+
+#### 3. `http://localhost:3000/api/v1/poker`にPOST形式で送信すると、判定結果がレスポンスされます。
+
+* 以下のような形式で出力されます。
+
+```
+{
+    "result": [
+        {
+            "cards": "H1 H13 H12 H11 H10",
+            "hand": "ストレートフラッシュ",
+            "best": true
+        },
+        {
+            "cards": "H9 C9 S9 H2 C2",
+            "hand": "フルハウス",
+            "best": false
+        }
+    ],
+    "error": [
+        {
+            "cards": "C13 E12 C11 h19 h19",
+            "msg": [
+                "2番目のカード指定文字が不正です。（E12）",
+                "4番目のカード指定文字が不正です。（h19）",
+                "5番目のカード指定文字が不正です。（h19）",
+                "カードが重複しています。（h19）"
+            ]
+        }
+    ]
+}
+```
+
+* 入力内容にエラーがない場合、⼊⼒したカードと該当する役の名前、及び入力したカードの中で最も強い役か否かを返します。
+
+* 入力内容にエラーがある場合、エラー内容に応じてメッセージが表示されます。
+
+### RSpec
+
+* テストにはRSpecを用いています。
+
+* Terminalで`$ bundle exec rspec`と入力するとテストが実行されます。

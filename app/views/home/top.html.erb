@@ -1,0 +1,10 @@
+<h1>Check a Porker Hand</h1>
+<%= form_tag("/check") do %>
+  <input name="cards" class="form" type="text">
+  <p><input class="btn" type="submit" value="check"></p>
+<% end %>
+<% if flash[:messages] %>
+  <%= simple_format(flash[:messages]) %>
+<% else %>
+  <%= "入力しなさい" %>
+<% end %>

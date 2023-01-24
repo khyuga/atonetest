@@ -12,6 +12,14 @@
 /db/*.sqlite3-journal
 
 # Ignore all logfiles and tempfiles.
+.idea/
 /log/*
 !/log/.keep
 /tmp
+/.idea/.gitignore
+/.idea/inspectionProfiles/Project_Default.xml
+/.idea/misc.xml
+/.idea/modules.xml
+/.idea/testproject.iml
+/.idea/vcs.xml
+/.idea/workspace.xml

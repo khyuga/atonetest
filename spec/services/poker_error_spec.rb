@@ -4,62 +4,106 @@ include PokerError
 
 RSpec.describe PokerError do
   describe 'エラー判定' do
-    let(:msg){ PokerError.hand_validation(cards) }
-    subject{msg}
+    subject { error_msg }
+
+    let(:error_msg) { PokerError.hand_validation(hand) }
+    let(:hand) { '' }
 
     context 'フォームが空白のケース'
-      let(:cards){ "" }
-      it { expect(msg).to eq ["手札のカード枚数が足りません。正しく手札を入力してください"] }
+
+    it { is_expected.to eq ['カードを入力してください。'] }
 
     shared_examples 'カードが5枚半角スペース区切りになってない' do
-      it { is_expected.to eq ["5つのカード指定文字を半角スペース区切りで入力してください。（例：\"S1 H3 D9 C13 S11\"）"] }
+      it { is_expected.to eq ['5つのカード指定文字を半角スペース区切りで入力してください。（例："S1 H3 D9 C13 S11"）'] }
     end
     context 'フォームが空白ではないが5枚以下のケース' do
-      let(:cards){ "S1 S2 S3 S4"}
+      let(:hand) { 'S1 S2 S3 S4' }
+
       it_behaves_like 'カードが5枚半角スペース区切りになってない'
     end
+
     context 'カードが5枚以上あるケース' do
-      let(:cards){ "S1 S2 S3 S4 S5 S6" }
+      let(:hand) { 'S1 S2 S3 S4 S5 S6' }
+
       it_behaves_like 'カードが5枚半角スペース区切りになってない'
     end
+
     context '区切りに全角スペースが含まれているケース' do
-      let(:cards){ "S1 S2 S3　S4 S5" }
+      let(:hand) { 'S1 S2 S3　S4 S5' }
+
       it_behaves_like 'カードが5枚半角スペース区切りになってない'
     end
 
     context 'カードは5枚だがスートに1つ不正文字が含まれているケース' do
-      let(:cards){ "S1 S2 s3 S4 S5" }
-      it { expect(msg).to eq ["3番目のカード指定文字が不正です。（s3）"] }
+      let(:hand) { 'S1 S2 s3 S4 S5' }
+
+      it { is_expected.to eq ['3番目のカード指定文字が不正です。（s3）'] }
     end
+
     context 'カードは5枚だがスートに複数不正文字が含まれているケース' do
-      let(:cards){ "Q1 S2 s3 S4 #5" }
-      it { expect(msg).to eq ["1番目のカード指定文字が不正です。（Q1）", "3番目のカード指定文字が不正です。（s3）", "5番目のカード指定文字が不正です。（#5）"] }
+      let(:hand) { 'Q1 S2 s3 S4 #5' }
+
+      it { is_expected.to eq ['1番目のカード指定文字が不正です。（Q1）', '3番目のカード指定文字が不正です。（s3）', '5番目のカード指定文字が不正です。（#5）'] }
     end
+
     context 'カードは5枚だがスート全てに不正文字が含まれているケース' do
-      let(:cards){ "Q1 @2 s3 04 #5" }
-      it { expect(msg).to eq ["1番目のカード指定文字が不正です。（Q1）", "2番目のカード指定文字が不正です。（@2）", "3番目のカード指定文字が不正です。（s3）", "4番目のカード指定文字が不正です。（04）", "5番目のカード指定文字が不正です。（#5）"] }
+      let(:hand) { 'Q1 @2 s3 04 #5' }
+
+      it {
+        expect(subject).to eq ['1番目のカード指定文字が不正です。（Q1）', '2番目のカード指定文字が不正です。（@2）', '3番目のカード指定文字が不正です。（s3）', '4番目のカード指定文字が不正です。（04）',
+                               '5番目のカード指定文字が不正です。（#5）']
+      }
     end
+
     context 'カードは5枚だが数字に1つ不正文字が含まれているケース' do
-      let(:cards){ "S1 S2 S14 S4 S5" }
-      it { expect(msg).to eq ["3番目のカード指定文字が不正です。（S14）"] }
+      let(:hand) { 'S1 S2 S14 S4 S5' }
+
+      it { is_expected.to eq ['3番目のカード指定文字が不正です。（S14）'] }
     end
+
     context 'カードは5枚だが数字に複数不正文字が含まれているケース' do
-      let(:cards){ "S0 S2 S14 S4 S5-2" }
-      it { expect(msg).to eq ["1番目のカード指定文字が不正です。（S0）", "3番目のカード指定文字が不正です。（S14）", "5番目のカード指定文字が不正です。（S5-2）"] }
+      let(:hand) { 'S0 S2 S14 S4 S5-2' }
+
+      it { is_expected.to eq ['1番目のカード指定文字が不正です。（S0）', '3番目のカード指定文字が不正です。（S14）', '5番目のカード指定文字が不正です。（S5-2）'] }
     end
+
     context 'カードは5枚だがスート全てに不正文字が含まれているケース' do
-      let(:cards){ "S0 S２ S14 S04 S5-2" }
-      it { expect(msg).to eq ["1番目のカード指定文字が不正です。（S0）", "2番目のカード指定文字が不正です。（S２）", "3番目のカード指定文字が不正です。（S14）", "4番目のカード指定文字が不正です。（S04）", "5番目のカード指定文字が不正です。（S5-2）"] }
+      let(:hand) { 'S0 S２ S14 S04 S5-2' }
+
+      it {
+        expect(subject).to eq ['1番目のカード指定文字が不正です。（S0）', '2番目のカード指定文字が不正です。（S２）', '3番目のカード指定文字が不正です。（S14）',
+                               '4番目のカード指定文字が不正です。（S04）', '5番目のカード指定文字が不正です。（S5-2）']
+      }
     end
+
     context 'カードは5枚だがスートと数字それぞれに不正文字が含まれているケース' do
-      let(:cards){ "S1 S２ U4 c09 S5" }
-      it { expect(msg).to eq ["2番目のカード指定文字が不正です。（S２）", "3番目のカード指定文字が不正です。（U4）", "4番目のカード指定文字が不正です。（c09）"] }
+      let(:hand) { 'S1 S２ U4 c09 S5' }
+
+      it { is_expected.to eq ['2番目のカード指定文字が不正です。（S２）', '3番目のカード指定文字が不正です。（U4）', '4番目のカード指定文字が不正です。（c09）'] }
     end
 
-    context 'カードは5枚で不正文字もないが重複が存在するケース' do
-      let(:cards){ "S1 S2 S2 S4 S5" }
-      it { expect(msg).to eq ["カードが重複しています。"] }
+    context 'カードは5枚で不正文字もないが重複が1つ存在するケース' do
+      let(:hand) { 'S1 S2 S2 S4 S5' }
+
+      it { is_expected.to eq ['カードが重複しています。（S2）'] }
     end
 
+    context 'カードは5枚で不正文字もないが重複が複数存在するケース' do
+      let(:hand) { 'S1 S1 S1 S4 S4' }
+
+      it { is_expected.to eq ['カードが重複しています。（S1, S4）'] }
+    end
+
+    context 'カードは5枚で不正文字があり指定文字の重複も存在するケース' do
+      let(:hand) { 'S1 p2 S3 S3 S5' }
+
+      it { is_expected.to eq ['2番目のカード指定文字が不正です。（p2）', 'カードが重複しています。（S3）'] }
+    end
+
+    context 'カードは5枚で不正文字があり不正文字の重複も存在するケース' do
+      let(:hand) { 'S1 p2 p2 S3 S5' }
+
+      it { is_expected.to eq ['2番目のカード指定文字が不正です。（p2）', '3番目のカード指定文字が不正です。（p2）', 'カードが重複しています。（p2）'] }
+    end
   end
 end

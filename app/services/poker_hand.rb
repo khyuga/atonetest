@@ -1,89 +1,92 @@
+# 指定通りに入力されたカードがどの役に該当するかを判定
 module PokerHand
   HAND_LIST = {
-    straight_flush: { name: "ストレートフラッシュ", score: 8 },
-    four_card: { name: "フォーカード", score: 7 },
-    full_house: { name: "フルハウス", score: 6 },
-    flush: { name: "フラッシュ", score: 5 },
-    straight: { name: "ストレート", score: 4 },
-    three_card: { name: "スリーカード", score: 3 },
-    two_pair: { name: "ツーペア", score: 2 },
-    one_pair: { name: "ワンペア", score: 1 },
-    high_card: { name: "ハイカード", score: 0 }
+    straight_flush?: { name: 'ストレートフラッシュ', score: 8 },
+    four_card?: { name: 'フォーカード', score: 7 },
+    full_house?: { name: 'フルハウス', score: 6 },
+    flush?: { name: 'フラッシュ', score: 5 },
+    straight?: { name: 'ストレート', score: 4 },
+    three_card?: { name: 'スリーカード', score: 3 },
+    two_pair?: { name: 'ツーペア', score: 2 },
+    one_pair?: { name: 'ワンペア', score: 1 },
+    high_card?: { name: 'ハイカード', score: 0 }
   }.freeze
 
-  def judgement_result(cards) # 役判定メソッド
-    result_array = HAND_LIST.keys.map do |hand|
-      send(hand, cards)
-    end
-    result = result_array.compact
-    #binding.pry
+  # 役判定メソッド
+  def category(hand)
+    hand_list_keys = HAND_LIST.keys.detect{ |x| send(x, hand) }
+    HAND_LIST[hand_list_keys]
   end
 
-  def suit_array(cards)
-    cards.scan(/[CDHS]/)
+  def category_name(hand)
+    category(hand)[:name]
   end
 
-  def number_array(cards)
-    cards.scan(/1[0-3]|[1-9]/).map(&:to_i)
+  def category_score(hand)
+    category(hand)[:score]
   end
 
-  def number_duplicate_counts(cards)
-    num_array = number_array(cards)
-    num_array.uniq.map{ |e| num_array.count(e) }.sort
+  def suit(hand)
+    hand.scan(/[CDHS]/)
   end
 
-  def straight_flush(cards)
-    if straight(cards) && flush(cards)
-      HAND_LIST[:straight_flush]
-    end
+  def number(hand)
+    hand.scan(/1[0-3]|[1-9]/).map(&:to_i)
   end
 
-  def straight(cards)
-    num_array = number_array(cards)
-    if (num_array.max - num_array.min == 4 && num_array.uniq.size == 5) || num_array.sort == [1,10,11,12,13]
-      HAND_LIST[:straight]
-    end
+  def number_duplicate_counts(hand)
+    number(hand).uniq.map { |e| number(hand).count(e) }.sort
   end
 
-  def flush(cards)
-    if suit_array(cards).uniq.size == 1
-      HAND_LIST[:flush]
-    end
+  def straight_flush?(hand)
+    straight?(hand) && flush?(hand)
   end
 
-  def four_card(cards)
-    if number_duplicate_counts(cards) == [1, 4]
-      HAND_LIST[:four_card]
-    end
+  def straight?(hand)
+    (number(hand).max - number(hand).min == 4 && number(hand).uniq.size == 5) || number(hand).sort == [1, 10, 11, 12, 13]
   end
 
-  def full_house(cards)
-    if number_duplicate_counts(cards) == [2, 3]
-      HAND_LIST[:full_house]
-    end
+  def flush?(hand)
+    suit(hand).uniq.size == 1
   end
 
-  def three_card(cards)
-    if number_duplicate_counts(cards) == [1, 1, 3]
-      HAND_LIST[:three_card]
-    end
+  def four_card?(hand)
+    number_duplicate_counts(hand) == [1, 4]
   end
 
-  def two_pair(cards)
-    if number_duplicate_counts(cards) == [1, 2, 2]
-      HAND_LIST[:two_pair]
-    end
+  def full_house?(hand)
+    number_duplicate_counts(hand) == [2, 3]
   end
 
-  def one_pair(cards)
-    if number_duplicate_counts(cards) == [1, 1, 1, 2]
-      HAND_LIST[:one_pair]
-    end
+  def three_card?(hand)
+    number_duplicate_counts(hand) == [1, 1, 3]
   end
 
-  def high_card(cards)
-    HAND_LIST[:high_card]
+  def two_pair?(hand)
+    number_duplicate_counts(hand) == [1, 2, 2]
   end
 
-  module_function :judgement_result, :suit_array, :number_array, :number_duplicate_counts, :straight_flush, :flush, :straight, :four_card, :full_house, :three_card, :two_pair, :one_pair, :high_card
+  def one_pair?(hand)
+    number_duplicate_counts(hand) == [1, 1, 1, 2]
+  end
+
+  def high_card?(hand)
+    number_duplicate_counts(hand) == [1, 1, 1, 1, 1] && ( [straight?(hand)] || [flush?(hand)] == false )
+  end
+
+  module_function :category,
+                  :category_name,
+                  :category_score,
+                  :suit,
+                  :number,
+                  :number_duplicate_counts,
+                  :straight_flush?,
+                  :flush?,
+                  :straight?,
+                  :four_card?,
+                  :full_house?,
+                  :three_card?,
+                  :two_pair?,
+                  :one_pair?,
+                  :high_card?
 end

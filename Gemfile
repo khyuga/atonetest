@@ -1,6 +1,5 @@
 source 'https://rubygems.org'
 
-
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.11.3'
 # Use sqlite3 as the database for Active Record
@@ -36,8 +35,8 @@ gem 'grape'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'pry-rails'
   gem 'byebug'
+  gem 'pry-rails'
   gem 'rspec-rails'
 end
 
@@ -50,3 +49,9 @@ group :development do
   gem 'spring-commands-rspec'
 end
 
+group :development, :test do
+  gem 'rubocop', require: false
+  gem "rubocop-performance", require: false
+  gem 'rubocop-rails', require: false
+  gem 'rubocop-rspec', require: false
+end

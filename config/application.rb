@@ -1,4 +1,4 @@
-require File.expand_path('../boot', __FILE__)
+require File.expand_path('boot', __dir__)
 
 require 'rails/all'
 
@@ -24,5 +24,6 @@ module Testproject
     config.active_record.raise_in_transactional_callbacks = true
     config.paths.add File.join('app', 'api'), glob: File.join('**', '*.rb')
     config.autoload_paths += Dir[Rails.root.join('app', 'api', '*')]
+    config.middleware.insert_before ActionDispatch::ParamsParser, 'RescueJsonParseErrors'
   end
 end

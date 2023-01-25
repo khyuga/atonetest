@@ -1,7 +1,6 @@
 # APIの出力面を作成
 module Services
   module PokerAPI
-
     def api_output(hands)
       invalid_hands = hands.select { |hand| PokerError.hand_validation(hand)&.any? }
       valid_hands = hands - invalid_hands

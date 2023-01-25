@@ -26,7 +26,7 @@ module PokerError
     cards.map.with_index do |card, i|
       error_messages << "#{i + 1}番目のカード指定文字が不正です。（#{card}）" unless card.match(correct_pairs)
     end
-    error_messages if error_messages.present?
+    error_messages.presence
   end
 
   # 重複を含むケース

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-include API::Ver1
+include Ver1
 
 RSpec.describe 'API', type: :request do
   before do
@@ -14,7 +14,6 @@ RSpec.describe 'API', type: :request do
   end
 
   describe '正常系' do
-
     context '正常なカードの組み合わせが1つ送信されるケース' do
       let(:params) do
         {
@@ -43,7 +42,6 @@ RSpec.describe 'API', type: :request do
   end
 
   describe '純正常系' do
-
     context '不正カードを1つ含む組み合わせが送信されるケース' do
       let(:params) do
         {

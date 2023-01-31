@@ -14,6 +14,5 @@ module Ver1
         Services::PokerAPI.api_output(hands)
       end
     end
-
   end
 end

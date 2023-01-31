@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-include API::Services::PokerAPI
+include Services::PokerAPI
 
-RSpec.describe API::Services::PokerAPI do
-  let(:error) { API::Services::PokerAPI.api_output(hands)[:error] }
-  let(:result) { API::Services::PokerAPI.api_output(hands)[:result] }
+RSpec.describe Services::PokerAPI do
+  let(:error) { Services::PokerAPI.api_output(hands)[:error] }
+  let(:result) { Services::PokerAPI.api_output(hands)[:result] }
 
   describe '正常系' do
     context '正常なカードの組み合わせが1つ送信されるケース' do
@@ -30,10 +30,10 @@ RSpec.describe API::Services::PokerAPI do
 
       it 'カードと役名とベスト判定' do
         expect(result).to eq [
-                               { cards: 'C13 S12 C11 C10 C7', hand: 'ハイカード', best: false },
-                               { cards: 'H9 C9 S9 H2 C2', hand: 'フルハウス', best: true },
-                               { cards: 'H9 S9 D11 H11 H10', hand: 'ツーペア', best: false }
-                             ]
+          { cards: 'C13 S12 C11 C10 C7', hand: 'ハイカード', best: false },
+          { cards: 'H9 C9 S9 H2 C2', hand: 'フルハウス', best: true },
+          { cards: 'H9 S9 D11 H11 H10', hand: 'ツーペア', best: false }
+        ]
       end
     end
   end
@@ -76,13 +76,13 @@ RSpec.describe API::Services::PokerAPI do
 
       it 'カードとエラー内容' do
         expect(error).to eq [
-                              { cards: 'H9 C9 S9 H22 C2', msg: '4番目のカード指定文字が不正です。（H22）' },
-                              { cards: 'H1 H13 W12 H11 H11',
-                                msg: ['3番目のカード指定文字が不正です。（W12）', 'カードが重複しています。（H11）'] },
-                              { cards: 'C13 D12 C11 H8',
-                                msg: '5つのカード指定文字を半角スペース区切りで入力してください。（例："S1 H3 D9 C13 S11"）' },
-                              { cards: '', msg: 'カードを入力してください。' }
-                            ]
+          { cards: 'H9 C9 S9 H22 C2', msg: '4番目のカード指定文字が不正です。（H22）' },
+          { cards: 'H1 H13 W12 H11 H11',
+            msg: ['3番目のカード指定文字が不正です。（W12）', 'カードが重複しています。（H11）'] },
+          { cards: 'C13 D12 C11 H8',
+            msg: '5つのカード指定文字を半角スペース区切りで入力してください。（例："S1 H3 D9 C13 S11"）' },
+          { cards: '', msg: 'カードを入力してください。' }
+        ]
       end
     end
 
@@ -98,17 +98,17 @@ RSpec.describe API::Services::PokerAPI do
 
       it '正常な組み合わせのカードと役名とベスト判定' do
         expect(result).to eq [
-                               { cards: 'H9 S9 D11 H11 H10', hand: 'ツーペア', best: false },
-                               { cards: 'H9 C9 S9 H2 C2', hand: 'フルハウス', best: true }
-                             ]
+          { cards: 'H9 S9 D11 H11 H10', hand: 'ツーペア', best: false },
+          { cards: 'H9 C9 S9 H2 C2', hand: 'フルハウス', best: true }
+        ]
       end
 
       it 'エラーを含む組み合わせのカードとエラー内容' do
         expect(error).to eq [
-                              { cards: 'H1 H13 H12 H11 H11', msg: 'カードが重複しています。（H11）' },
-                              { cards: 'C13 D12 C11 H8 H7 H10',
-                                msg: '5つのカード指定文字を半角スペース区切りで入力してください。（例："S1 H3 D9 C13 S11"）' }
-                            ]
+          { cards: 'H1 H13 H12 H11 H11', msg: 'カードが重複しています。（H11）' },
+          { cards: 'C13 D12 C11 H8 H7 H10',
+            msg: '5つのカード指定文字を半角スペース区切りで入力してください。（例："S1 H3 D9 C13 S11"）' }
+        ]
       end
     end
   end

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'API', type: :request do
-  include API::Ver1
+  include Ver1
 
   describe 'POST API' do
     before do

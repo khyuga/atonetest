@@ -14,7 +14,7 @@ module PokerHand
 
   # 役判定メソッド
   def category(hand)
-    hand_list_keys = HAND_LIST.keys.detect{ |x| send(x, hand) }
+    hand_list_keys = HAND_LIST.keys.detect { |x| send(x, hand) }
     HAND_LIST[hand_list_keys]
   end
 
@@ -71,7 +71,7 @@ module PokerHand
   end
 
   def high_card?(hand)
-    number_duplicate_counts(hand) == [1, 1, 1, 1, 1] && ( [straight?(hand)] || [flush?(hand)] == false )
+    number_duplicate_counts(hand) == [1, 1, 1, 1, 1] && ([straight?(hand)] || [flush?(hand)] == false)
   end
 
   module_function :category,
